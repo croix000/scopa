@@ -87,7 +87,10 @@ namespace Scopa {
                 var newTexture = new Texture2D( width, height, usesTransparency ? TextureFormat.RGBA32 : TextureFormat.RGB24, true, config.linearColorspace);
                 newTexture.name = texData.Name.ToLowerInvariant();
                 newTexture.SetPixels32(pixels);
+#if UNITY_EDITOR
+
                 newTexture.alphaIsTransparency = usesTransparency;
+#endif
                 newTexture.filterMode = config.filterMode;
                 newTexture.anisoLevel = config.anisoLevel;
                 newTexture.Apply();
@@ -102,9 +105,19 @@ namespace Scopa {
         }
 
         public static Material BuildMaterialForTexture( Texture2D texture, ScopaWadConfig config ) {
-            var material = texture.alphaIsTransparency ? GenerateMaterialAlpha(config) : GenerateMaterialOpaque(config);
+
+            var material = GenerateMaterialOpaque(config);
+#if UNITY_EDITOR
+
+
+            material = texture.alphaIsTransparency ? GenerateMaterialAlpha(config) : GenerateMaterialOpaque(config); 
             material.name = texture.name;
             material.mainTexture = texture;
+#else
+            material.name = texture.name;
+            material.mainTexture = texture;
+#endif
+
 
             return material;
         }

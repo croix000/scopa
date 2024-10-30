@@ -309,6 +309,7 @@ namespace Scopa {
             // begin collision jobs
             ScopaMesh.ColliderJobGroup colliderJob = null;
             if ( config.colliderMode != ScopaMapConfig.ColliderImportMode.None && entityNeedsCollider ) {
+
                 bool isTrigger = config.IsEntityTrigger(entData.ClassName);
                 bool forceConvex = entData.TryGetInt("_convex", out var num) && num == 1;
                 colliderJob = new ScopaMesh.ColliderJobGroup(
@@ -447,6 +448,44 @@ namespace Scopa {
                 if ( addedMeshRenderer ) { // if we added a generic mesh renderer, then set default shadow caster setting too
                     meshRenderer.shadowCastingMode = config.castShadows;
                 }
+
+                bool addedSurface = false;
+
+                //Add a mesh collider for surface
+                if (newMeshObj.TryGetComponent<MaterialSurface>(out MaterialSurface surface) == false)
+                {
+                    surface = newMeshObj.AddComponent<MaterialSurface>();
+                    addedSurface = true;
+                }
+                else
+                {
+                    addedSurface = true;
+                }
+
+                if (addedSurface)
+                {
+
+                    newMeshObj.layer = 14;
+
+                    MeshCollider surfaceCol = null;
+
+                    if (newMeshObj.TryGetComponent<MeshCollider>(out surfaceCol) == false)
+                    {
+                        surfaceCol = newMeshObj.AddComponent<MeshCollider>();
+                    }
+
+                    surfaceCol.sharedMesh = meshFilter.sharedMesh;
+
+                    if (config.surfaces)
+                    {
+                        surface.Surface = config.surfaces.GetSurface(meshRenderer.sharedMaterial);
+                    }
+                    else
+                    {
+                        surface.Surface = MaterialSurface.ESurface.Concrete;
+                    }
+                }
+
             }
 
             if (colliderJob != null) {
@@ -530,13 +569,16 @@ namespace Scopa {
             if ( isNavigationStatic ) {
                 go.isStatic = true;
             } else {
-                GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.ContributeGI 
-                    | StaticEditorFlags.OccluderStatic 
-                    | StaticEditorFlags.BatchingStatic 
-                    | StaticEditorFlags.OccludeeStatic 
-                    | StaticEditorFlags.OffMeshLinkGeneration 
+#if UNITY_EDITOR
+
+                GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.ContributeGI
+                    | StaticEditorFlags.OccluderStatic
+                    | StaticEditorFlags.BatchingStatic
+                    | StaticEditorFlags.OccludeeStatic
+                    | StaticEditorFlags.OffMeshLinkGeneration
                     | StaticEditorFlags.ReflectionProbeStatic
                 );
+#endif
             }
         }
 

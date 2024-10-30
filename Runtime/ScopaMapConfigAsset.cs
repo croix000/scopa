@@ -103,6 +103,9 @@ namespace Scopa {
         [Tooltip("(optional) If there isn't an entity override defined above, then the next place we look for entity prefabs is in this FGD asset.")]
         public ScopaFgdConfigAsset fgdAsset;
 
+        [Tooltip("(optional) Defines the surfaces of the materials used in brushes. The default surface is concrete.")]
+        public MaterialsSurfaceData surfaces;
+
         static Material builtinDefaultMaterial = null;
 
         /// <summary> note: textureName must already be ToLowerInvariant() </summary>
@@ -194,7 +197,9 @@ namespace Scopa {
                 GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Plane);
                 primitive.active = false;
                 builtinDefaultMaterial = primitive.GetComponent<MeshRenderer>().sharedMaterial;
+#if UNITY_EDITOR
                 DestroyImmediate(primitive);
+#endif
             }
             return builtinDefaultMaterial;
 

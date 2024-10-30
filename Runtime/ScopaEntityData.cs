@@ -41,6 +41,7 @@ namespace Scopa {
         public bool TryGetString(string propertyKey, out string data, bool verbose = false) {
             data = null;
 
+    
             if (!Properties.ContainsKey(propertyKey)) {
                 if (verbose)
                     LogNoKey(propertyKey);

@@ -147,7 +147,7 @@ namespace Sledge.Formats.Map.Formats
                     var val = Expect(it, TokenType.String).Value;
                     SkipNonNewlineWhitespace(it);
                     Expect(it, TokenType.Whitespace, x => x.Contains("\n"));
-
+                    if (key == "wad") continue;
                     if (key == "classname") ent.ClassName = val;
                     else if (key == "spawnflags") ent.SpawnFlags = int.Parse(val);
                     else ent.Properties[key] = val;

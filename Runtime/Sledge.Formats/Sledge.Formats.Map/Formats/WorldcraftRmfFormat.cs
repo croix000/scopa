@@ -208,6 +208,7 @@ namespace Sledge.Formats.Map.Formats
                 var key = br.ReadCString();
                 var value = br.ReadCString();
                 if (key == null) continue;
+ 
                 e.Properties[key] = value;
             }
 
