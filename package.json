@@ -1,5 +1,5 @@
 {
-  "name": "com.croix000.scopa",
+  "name": "com.radiatoryang.scopa",
   "displayName": "Scopa (MAP/WAD importer)",
   "version": "1.0.1",
   "description": "Level design plugin that adds Quake .MAP import + Quake / Half-Life WAD import, at editor time and/or runtime. To maks .MAPs, use a tool like TrenchBroom.",
