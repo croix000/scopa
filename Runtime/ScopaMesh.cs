@@ -567,6 +567,7 @@ namespace Scopa {
             JobHandle jobHandle;
             Mesh[] meshes;
             bool isTrigger, isConvex;
+            int layer;
          
 
             public ColliderJobGroup(GameObject gameObject, bool isTrigger, bool forceConvex, string colliderNameFormat, IEnumerable<Solid> solids, ScopaMapConfig config, Dictionary<Solid, Entity> mergedEntityData) {
@@ -576,6 +577,7 @@ namespace Scopa {
                 var solidFaceOffsetsManaged = new List<int>();
                 var solidCount = 0;
                 this.isTrigger = isTrigger;
+                this.layer = config.layer;
                 this.isConvex = forceConvex || config.colliderMode != ScopaMapConfig.ColliderImportMode.MergeAllToOneConcaveMeshCollider;
                 foreach( var solid in solids) {
                     if (mergedEntityData.ContainsKey(solid) && (config.IsEntityNonsolid(mergedEntityData[solid].ClassName) || config.IsEntityTrigger(mergedEntityData[solid].ClassName)) )
@@ -670,7 +672,7 @@ namespace Scopa {
                     newGO.transform.localPosition = Vector3.zero;
                     newGO.transform.localRotation = Quaternion.identity;
                     newGO.transform.localScale = Vector3.one;
-
+                    newGO.layer = layer;
 
                     newMesh.RecalculateBounds();
                     if (canBeBoxCollider[i]) { // if box collider, we'll just use the mesh bounds to config a collider

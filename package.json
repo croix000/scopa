@@ -1,15 +1,15 @@
 {
-  "name": "com.radiatoryang.scopa",
+  "name": "com.croix000.scopa",
   "displayName": "Scopa (MAP/WAD importer)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Level design plugin that adds Quake .MAP import + Quake / Half-Life WAD import, at editor time and/or runtime. To maks .MAPs, use a tool like TrenchBroom.",
   "unity": "2020.1",
   "keywords": [ "level design", "graybox", "blockout", "trenchbroom", "quake", "half-life", "environment", "env", "map", "wad", "bsp", "csg", "texture" ],
   "documentationUrl": "https://github.com/radiatoryang/scopa",
   "licensesUrl": "https://github.com/radiatoryang/scopa/LICENSE.md",
   "author": {
-    "name": "Robert Yang",
-    "email": "2285943+radiatoryang@users.noreply.github.com",
+    "name": "Croix",
+    "email": "johang@nintaistudios.com",
     "url": "https://debacle.us"
   },
   "type": "tool"
